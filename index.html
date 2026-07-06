@@ -5,79 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 멋진 사이트</title>
     <style>
-        /* 화면 전체를 배경으로 채우는 스타일 */
-        body, html {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
             background-color: #000;
-            font-family: sans-serif;
         }
-
-        /* GIF 배경 설정 */
+        /* 들어가자마자 화면을 꽉 채울 GIF 배경 */
         .background-gif {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background: url('background.gif') no-repeat center center;
             background-size: cover;
-            display: none; /* 처음에는 숨겨둠 */
-        }
-
-        /* 입장 버튼 스타일 */
-        .enter-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-        }
-
-        .enter-btn {
-            padding: 15px 30px;
-            font-size: 20px;
-            cursor: pointer;
-            background-color: #fff;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.3);
-            transition: 0.3s;
-        }
-
-        .enter-btn:hover {
-            background-color: #ddd;
         }
     </style>
 </head>
 <body>
 
-    <audio id="myAudio" src="music.mp3" loop></audio>
+    <audio id="myAudio" src="music.mp3" autoplay loop preload="auto"></audio>
 
-    <div class="enter-container" id="enterScreen">
-        <button class="enter-btn" onclick="startSite()">사이트 입장하기</button>
-    </div>
-
-    <div class="background-gif" id="bgGif"></div>
+    <div class="background-gif"></div>
 
     <script>
-        function startSite() {
-            // 버튼 화면 숨기기
-            document.getElementById('enterScreen').style.display = 'none';
-            
-            // GIF 배경 보여주기
-            document.getElementById('bgGif').style.display = 'block';
-            
-            // 음악 재생하기
+        // 혹시나 브라우저가 자동재생을 막았을 때를 대비해, 
+        // 사용자가 화면 어디든 '한 번만 까딱 클릭'해도 바로 소리가 터져 나오게 만드는 안전장치 코드
+        window.addEventListener('click', function() {
             var audio = document.getElementById('myAudio');
-            audio.play().catch(function(error) {
-                console.log("자동 재생이 차단되었습니다:", error);
-            });
-        }
+            audio.play();
+        }, { once: true });
     </script>
 </body>
 </html>
